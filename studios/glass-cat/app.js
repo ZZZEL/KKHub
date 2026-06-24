@@ -34,8 +34,8 @@ const outputs = {
 };
 
 const presets = [
-  { name: "示例猫", type: "image", src: "./assets/preset-cat.jpg" },
-  { name: "示例狗", type: "image", src: "./assets/preset-dog.jpg" },
+  { name: "示例猫", src: "./assets/preset-cat.jpg" },
+  { name: "示例狗", src: "./assets/preset-dog.jpg" },
 ];
 
 const state = {
@@ -156,6 +156,12 @@ function rejectObjectUrl(src, message) {
     state.objectUrl = null;
   }
   showMediaError(message);
+}
+
+function clearUploadedObjectUrl() {
+  if (!state.objectUrl) return;
+  URL.revokeObjectURL(state.objectUrl);
+  state.objectUrl = null;
 }
 
 function colorDistance(data, index, color) {
@@ -1056,7 +1062,7 @@ function drawGlassBevel(size, highlight, magnify, live) {
   ctx.restore();
 }
 
-function drawGlass(source, cover, time) {
+function drawGlass(source, time) {
   const sourceWidth = source.width;
   const sourceHeight = source.height;
   const gridCount = Number(controls.gridCount.value);
@@ -1165,7 +1171,7 @@ function draw(time = 0) {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   drawScene(state.source, cover);
   ctx.drawImage(sceneCanvas, 0, 0);
-  drawGlass(sceneCanvas, null, time);
+  drawGlass(sceneCanvas, time);
   loadingState.classList.add("hidden");
 
   state.forceRender = false;
@@ -1301,6 +1307,7 @@ function renderPresets() {
     button.addEventListener("click", () => {
       setActivePreset(index);
       resetSourceControls();
+      clearUploadedObjectUrl();
       loadImage(preset.src);
     });
 
@@ -1452,7 +1459,7 @@ function bindControls() {
       fileInput.value = "";
       return;
     }
-    if (state.objectUrl) URL.revokeObjectURL(state.objectUrl);
+    clearUploadedObjectUrl();
     const url = URL.createObjectURL(file);
     state.objectUrl = url;
     setActivePreset(-1);

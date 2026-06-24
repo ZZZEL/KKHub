@@ -212,26 +212,6 @@
   font-weight: 680;
 }
 
-.banner-progress {
-  position: absolute;
-  left: 50%;
-  bottom: -24px;
-  display: flex;
-  gap: 7px;
-  transform: translateX(-50%);
-}
-
-.banner-progress span {
-  width: 22px;
-  height: 2px;
-  border-radius: 999px;
-  background: rgba(23, 32, 30, 0.18);
-}
-
-.banner-progress .active {
-  background: var(--warm);
-}
-
 .studio-directory {
   padding: 34px var(--page-gutter) 38px;
   border-bottom: 1px solid rgba(23, 32, 30, 0.1);
@@ -280,12 +260,8 @@
   box-shadow: 0 18px 48px rgba(36, 43, 40, 0.08);
 }
 
-.project-card.active {
-  grid-template-columns: minmax(142px, 42%) minmax(0, 1fr);
-}
-
-.project-card.active:hover,
-.project-card.active:focus-visible {
+a.project-card:hover,
+a.project-card:focus-visible {
   border-color: rgba(15, 125, 115, 0.4);
   transform: translateY(-2px);
 }
@@ -448,11 +424,8 @@
 
   .portal-links a {
     min-width: 0;
-    text-align: left;
-  }
-
-  .portal-links a {
     padding: 10px 0;
+    text-align: left;
   }
 
   .portal-links a::after {
@@ -512,8 +485,7 @@
     gap: 14px;
   }
 
-  .project-card,
-  .project-card.active {
+  .project-card {
     grid-template-columns: 1fr;
   }
 
