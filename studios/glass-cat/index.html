@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="zh-CN" class="studio-document">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>玻璃猫 | KK园区</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="../../styles/base.css" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body class="studio-page">
+    <main class="glass-studio" aria-label="玻璃猫创意实验室">
+      <div class="app-shell">
+        <section class="stage-panel" aria-label="玻璃猫效果预览">
+          <header class="topbar">
+            <div class="brand">
+              <a class="home-back-button" href="../../index.html" title="回到首页" aria-label="回到首页">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M15 18 9 12l6-6" />
+                </svg>
+              </a>
+              <div>
+                <h1>玻璃猫</h1>
+                <p>方格压花玻璃折射实验</p>
+              </div>
+            </div>
+            <div class="toolbar">
+              <button class="icon-button" id="downloadButton" type="button" title="下载当前效果" aria-label="下载当前效果">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M12 4v10" />
+                  <path d="m8 10 4 4 4-4" />
+                  <path d="M6 19h12" />
+                </svg>
+              </button>
+            </div>
+          </header>
+
+          <div class="canvas-frame">
+            <canvas id="glassCanvas" width="1080" height="1350"></canvas>
+            <div class="loading hidden" id="loadingState" aria-live="polite"></div>
+          </div>
+        </section>
+
+        <aside class="control-panel" aria-label="创意控制台">
+          <section class="panel-section asset-section">
+            <div class="section-title-row">
+              <h2>素材</h2>
+              <div class="asset-pager" aria-label="素材分页">
+                <button class="pager-button" id="assetPrev" type="button" aria-label="上一页">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6" /></svg>
+                </button>
+                <output id="assetPageValue">1/1</output>
+                <button class="pager-button" id="assetNext" type="button" aria-label="下一页">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6" /></svg>
+                </button>
+              </div>
+            </div>
+            <input class="asset-file-input" id="fileInput" type="file" accept="image/*,.gif,video/*" />
+            <div class="asset-grid" id="presetGrid"></div>
+          </section>
+
+          <section class="panel-section">
+            <h2>画面</h2>
+            <div class="segmented matte-grid" role="group" aria-label="主体抠图">
+              <button class="segment matte-segment active" type="button" data-matte="off">原图</button>
+              <button class="segment matte-segment" type="button" data-matte="on">主体</button>
+            </div>
+            <div class="control-row">
+              <label for="sourceScale">素材大小</label>
+              <output id="sourceScaleValue">100%</output>
+              <input id="sourceScale" type="range" min="50" max="150" value="100" />
+              <button class="range-default-button" type="button" data-control="sourceScale" data-value="100" title="回到 100%" aria-label="素材大小回到 100%"></button>
+            </div>
+            <div class="control-row">
+              <label for="sourceX">水平位置</label>
+              <output id="sourceXValue">0</output>
+              <input id="sourceX" type="range" min="-50" max="50" value="0" />
+              <button class="range-default-button" type="button" data-control="sourceX" data-value="0" title="回到 0" aria-label="水平位置回到 0"></button>
+            </div>
+            <div class="control-row">
+              <label for="sourceY">垂直位置</label>
+              <output id="sourceYValue">0</output>
+              <input id="sourceY" type="range" min="-50" max="50" value="0" />
+              <button class="range-default-button" type="button" data-control="sourceY" data-value="0" title="回到 0" aria-label="垂直位置回到 0"></button>
+            </div>
+          </section>
+
+          <section class="panel-section">
+            <div class="section-title-row">
+              <h2>玻璃</h2>
+              <button class="mini-icon-button" id="randomizeButton" type="button" title="随机玻璃参数" aria-label="随机玻璃参数">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M4 7h3.2c2.2 0 3.2 10 6 10H20" />
+                  <path d="M4 17h3.2c2.2 0 3.2-10 6-10H20" />
+                  <path d="m17 4 3 3-3 3" />
+                  <path d="m17 14 3 3-3 3" />
+                </svg>
+              </button>
+            </div>
+            <div class="control-row">
+              <label for="gridCount">格子数量</label>
+              <output id="gridCountValue">81</output>
+              <input id="gridCount" type="range" min="3" max="15" step="1" value="9" />
+            </div>
+            <div class="control-row">
+              <label for="distortion">折射强度</label>
+              <output id="distortionValue">18</output>
+              <input id="distortion" type="range" min="0" max="44" value="18" />
+            </div>
+            <div class="control-row">
+              <label for="magnify">玻璃厚度</label>
+              <output id="magnifyValue">14</output>
+              <input id="magnify" type="range" min="100" max="136" value="114" />
+            </div>
+            <div class="control-row">
+              <label for="softness">磨砂</label>
+              <output id="softnessValue">4</output>
+              <input id="softness" type="range" min="0" max="10" value="4" />
+            </div>
+            <div class="control-row">
+              <label for="highlight">反光</label>
+              <output id="highlightValue">64</output>
+              <input id="highlight" type="range" min="10" max="100" value="64" />
+            </div>
+          </section>
+
+          <section class="panel-section compact">
+            <h2>动画</h2>
+            <div class="segmented motion-grid" role="group" aria-label="动画">
+              <button class="segment motion-segment active" type="button" data-motion="still">静止</button>
+              <button class="segment motion-segment" type="button" data-motion="horizontal">左右</button>
+              <button class="segment motion-segment" type="button" data-motion="vertical">上下</button>
+              <button class="segment motion-segment" type="button" data-motion="drift">漂移</button>
+            </div>
+          </section>
+        </aside>
+      </div>
+    </main>
+
+    <video id="videoSource" muted playsinline loop hidden></video>
+    <script src="./app.js?v=20260624-gif-export-fix"></script>
+  </body>
+</html>
